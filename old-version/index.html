@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xusniya uchun Sevgi Maktubi 💌</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Orqa fondagi suzuvchi yuraklar va yulduzchalar -->
+  <canvas id="ambientCanvas"></canvas>
+
+  <!-- Yumshoq nurli fon auralari -->
+  <div class="dreamy-blur blur-1"></div>
+  <div class="dreamy-blur blur-2"></div>
+  <div class="dreamy-blur blur-3"></div>
+
+  <!-- Yuqori qulay menyu -->
+  <header class="app-header">
+    <div class="header-logo">
+      <span class="heart-icon">💖</span>
+      <span class="logo-text">Xusniya uchun</span>
+    </div>
+    <div class="header-actions">
+      <button id="musicToggleBtn" class="pill-action-btn" title="Musiqa">
+        <span class="icon">🎵</span>
+        <span class="lbl">Musiqa</span>
+      </button>
+      <button id="uploadNavBtn" class="pill-action-btn highlight" title="Rasm qo'yish">
+        <span class="icon">📸</span>
+        <span class="lbl">Rasm qo'yish</span>
+      </button>
+      <button id="editModalBtn" class="pill-action-btn" title="Tahrirlash">
+        <span class="icon">✏️</span>
+        <span class="lbl">Tahrirlash</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Yashirin rasm fayl tanlash inputi -->
+  <input type="file" id="photoFileInput" accept="image/*" style="display: none;">
+
+  <!-- ASOSIY SAHIFA -->
+  <main class="content-wrapper">
+
+    <!-- 1-BOSQICH: QIZNING RASMI & ELEGANT KONVERT -->
+    <section id="envelopeView" class="view-envelope">
+      
+      <!-- Sarlavha -->
+      <div class="hero-title-box">
+        <div class="cute-tag">✨ Maxsus Dil Izhori ✨</div>
+        <h1 class="main-heading">
+          <span class="script-name name-display">Xusniya</span>
+          <span class="for-label">uchun</span>
+        </h1>
+        <p class="hero-subtext">Bu maktub faqat senga atalgan eng samimiy so'zlardan iborat...</p>
+      </div>
+
+      <!-- Xusniyaning Rasmi uchun maxsus Polaroid ramka -->
+      <div class="photo-card-container">
+        <div class="polaroid-aesthetic" id="polaroidBox" title="Rasmni o'zgartirish uchun bosing">
+          <div class="pin-badge">📌</div>
+          
+          <div class="photo-inner-frame" id="photoFrameArea">
+            <!-- Agar rasm bo'lsa shu img ko'rinadi -->
+            <img id="girlPhotoDisplay" src="" alt="Xusniya" class="user-photo hidden">
+            
+            <!-- Standart ko'rinish (agar rasm yuklanmagan bo'lsa) -->
+            <div class="photo-starter-placeholder" id="photoStarter">
+              <div class="camera-circle">
+                <span class="cam-icon">📷</span>
+              </div>
+              <h4 class="starter-title">Xusniyaning rasmini qo'ying</h4>
+              <p class="starter-sub">Kompyuter yoki telefondan rasm tanlash uchun bu yerga bosing</p>
+              <button type="button" class="mini-upload-btn">Rasm tanlash ✨</button>
+            </div>
+
+            <!-- Rasm ustidagi tezkor almashtirish tugmasi -->
+            <div class="photo-hover-tag">
+              <span>🔄 Rasmni o'zgartirish</span>
+            </div>
+          </div>
+
+          <div class="polaroid-text">
+            <span class="caption-hand" id="captionDisplay">Mening yagona go'zalim ✨</span>
+            <span class="heart-sparkle">💕</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Romantik Konvert -->
+      <div class="envelope-interactive-area">
+        <div class="envelope-box" id="envelopeWrapper" role="button" aria-label="Maktubni ochish">
+          <div class="env-shadow"></div>
+          
+          <div class="envelope-body">
+            <div class="env-layer-back"></div>
+            
+            <!-- Konvertdan ko'rinib turgan qog'oz -->
+            <div class="env-letter-sheet">
+              <div class="sheet-line red"></div>
+              <div class="sheet-line"></div>
+              <div class="sheet-line short"></div>
+              <div class="sheet-heart">💌</div>
+            </div>
+
+            <div class="env-layer-pocket"></div>
+            <div class="env-layer-flap" id="envFlap"></div>
+            
+            <!-- Oltin/Qizil Mum Muhr -->
+            <div class="wax-stamp" id="waxStamp">
+              <div class="stamp-border">
+                <span class="stamp-symbol">❤</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="click-pulse-hint">
+          <span class="bounce-arrow">👆</span>
+          <span class="hint-pill">Maktubni o'qish uchun konvert ustiga bosing ✨</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 2-BOSQICH: OCHILGAN MAKTUB & INTERAKTIV BO'LIMLAR -->
+    <section id="letterView" class="view-letter hidden">
+      
+      <!-- Kichraytirilgan rasm vitrinasi (xat ochilganda ham ko'rinib turadi) -->
+      <div class="floating-photo-strip">
+        <div class="mini-polaroid" id="miniPolaroid">
+          <img id="miniGirlPhoto" src="" alt="Xusniya" class="mini-photo-img hidden">
+          <div class="mini-placeholder" id="miniPlaceholder">
+            <span>🌸</span>
+          </div>
+          <div class="mini-info">
+            <strong class="name-display">Xusniya</strong>
+            <span id="miniCaption">Mening yagonam ❤️</span>
+          </div>
+          <button id="miniChangePhotoBtn" class="mini-edit-btn" title="Rasmni almashtirish">📷 Rasm</button>
+        </div>
+      </div>
+
+      <!-- Asosiy Romantik Xat Varaqi -->
+      <div class="letter-parchment-sheet" id="letterPaper">
+        <div class="sheet-golden-seal">💌 SEVGI MAKTUBI</div>
+
+        <div class="letter-top-info">
+          <span class="meta-tag">Faqat sen uchun</span>
+          <span class="meta-date" id="letterDateDisplay">Doimiy va abadiy</span>
+        </div>
+
+        <div class="letter-salutation">
+          <h2 class="recipient-heading">
+            <span class="name-display calligraphy-font">Xusniya</span>...
+          </h2>
+        </div>
+
+        <div class="letter-body-area">
+          <p id="typedContent" class="letter-text"></p>
+          <span id="typingCursor" class="cursor">|</span>
+        </div>
+
+        <div class="skip-typing-row">
+          <button id="skipTypingBtn" class="ghost-link">Tezda to'liq ko'rsatish ⚡</button>
+        </div>
+
+        <div class="letter-sign-off">
+          <span class="sign-text">Cheksiz samimiyat va muhabbat bilan,</span>
+          <div class="sender-signature calligraphy-font sender-display">Sening Oshig'ing ❤️</div>
+        </div>
+
+        <div class="letter-bottom-actions">
+          <button id="reopenEnvelopeBtn" class="pill-btn-soft">
+            <span>✉️</span> Qayta o'rash
+          </button>
+          <button id="shareLoveBtn" class="pill-btn-soft highlight">
+            <span>🔗</span> Havoladan nusxa olish
+          </button>
+        </div>
+      </div>
+
+      <!-- 3-BOSQICH: INTERAKTIV KARTALAR -->
+      <div class="interactive-cards-container">
+        
+        <!-- 1. Bizning Vaqtimiz (Timer) -->
+        <div class="glass-card timer-card">
+          <div class="card-title-group">
+            <span class="card-icon">⏳</span>
+            <div>
+              <h3>Bizning Baxtli Kunlarimiz</h3>
+              <p>Sen bilan o'tgan har bir soniya bebaho:</p>
+            </div>
+          </div>
+
+          <div class="timer-countdown-row">
+            <div class="time-block">
+              <span class="num" id="daysCount">0</span>
+              <span class="label">Kun</span>
+            </div>
+            <div class="time-block">
+              <span class="num" id="hoursCount">00</span>
+              <span class="label">Soat</span>
+            </div>
+            <div class="time-block">
+              <span class="num" id="minutesCount">00</span>
+              <span class="label">Daqiqa</span>
+            </div>
+            <div class="time-block">
+              <span class="num" id="secondsCount">00</span>
+              <span class="label">Soniya</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Seni nima uchun sevaman? (Kartalar) -->
+        <div class="glass-card reasons-card">
+          <div class="card-title-group">
+            <span class="card-icon">💖</span>
+            <div>
+              <h3>Seni nima uchun sevaman?</h3>
+              <p>Kartalar ustiga bosing:</p>
+            </div>
+          </div>
+
+          <div class="reasons-pill-grid">
+            <div class="reason-pill" tabindex="0">
+              <div class="reason-num">1</div>
+              <div class="reason-content">
+                <strong>Beg'ubor Tabassuming</strong>
+                <p>Sening samimiy kulging qorong'u kunlarimni ham oftobdek yoritadi.</p>
+              </div>
+            </div>
+
+            <div class="reason-pill" tabindex="0">
+              <div class="reason-num">2</div>
+              <div class="reason-content">
+                <strong>Sehrli Ko'zlaring</strong>
+                <p>Nigohing tubida butun koinotning eng pokiza mehri mujassam.</p>
+              </div>
+            </div>
+
+            <div class="reason-pill" tabindex="0">
+              <div class="reason-num">3</div>
+              <div class="reason-content">
+                <strong>Nafis Qalbing</strong>
+                <p>Har bir so'zingdagi samimiylik va noziklik meni har kuni lol qoldiradi.</p>
+              </div>
+            </div>
+
+            <div class="reason-pill" tabindex="0">
+              <div class="reason-num">4</div>
+              <div class="reason-content">
+                <strong>Borliging</strong>
+                <p>Sen hayotimda borsan va shu hayotimning o'zi eng katta baxtga aylandi.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Interaktiv Savol & Qochadigan tugma -->
+        <div class="glass-card proposal-card" id="proposalArea">
+          <div class="card-title-group center">
+            <span class="card-icon big-bounce">💍</span>
+            <h3>Bir umrga mening baxtim bo'lasanmi?</h3>
+            <p>Iltimos, qalbingga quloq solib javob ber :)</p>
+          </div>
+
+          <div class="answers-container" id="answersContainer">
+            <button id="yesBtn" class="big-yes-btn">
+              <span>Ha, albatta! ❤️</span>
+            </button>
+            <button id="noBtn" class="funny-no-btn">
+              <span>Yo'q 🙈</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- QUVOCHLI TABRIK MODALI («Ha» bosilganda) -->
+  <div id="celebrationModal" class="sweet-modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-window">
+      <div class="sweet-emoji">🎉💖💍</div>
+      <h2>Dunyodagi eng baxtli insonman!</h2>
+      <p>
+        Sening «HA» degan javobing hayotimdagi eng qadrli tuhfa bo'ldi, <strong class="name-display">Xusniya</strong>!
+        Bizning sevgi tariximiz yanada go'zal davom etadi! ❤️
+      </p>
+      <button id="closeCelebrationBtn" class="big-yes-btn small">
+        <span>Men ham seni sevaman! 💕</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- TAHRIRLASH MODALI -->
+  <div id="editModal" class="sweet-modal hidden">
+    <div class="modal-backdrop" id="editModalBackdrop"></div>
+    <div class="modal-window edit-mode">
+      <div class="modal-top">
+        <h3>Maktubni moslashtirish 📝</h3>
+        <button id="closeEditModalBtn" class="close-btn">&times;</button>
+      </div>
+
+      <form id="customizeForm" class="clean-form">
+        <div class="form-row">
+          <label for="inputRecipient">Ismi:</label>
+          <input type="text" id="inputRecipient" value="Xusniya" required maxlength="50">
+        </div>
+
+        <div class="form-row">
+          <label for="inputSender">Kimdan:</label>
+          <input type="text" id="inputSender" value="Sening Oshig'ing" required maxlength="50">
+        </div>
+
+        <div class="form-row">
+          <label for="inputStartDate">Sana (Tanishing/Sevgi boshlangan):</label>
+          <input type="date" id="inputStartDate">
+        </div>
+
+        <div class="form-row">
+          <label for="inputCaption">Rasm ostidagi so'zlar:</label>
+          <input type="text" id="inputCaption" value="Mening yagona go'zalim ✨">
+        </div>
+
+        <div class="form-row">
+          <label for="inputMessage">Maktub matni:</label>
+          <textarea id="inputMessage" rows="5"></textarea>
+        </div>
+
+        <div class="form-buttons">
+          <button type="button" id="resetDefaultsBtn" class="pill-btn-soft">Standartga qaytarish</button>
+          <button type="submit" class="big-yes-btn small">Saqlash ✨</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST XABARNOMALARI -->
+  <div id="toastNotification" class="sweet-toast hidden">
+    <span class="toast-icon">✨</span>
+    <span id="toastText">Bajarildi!</span>
+  </div>
+
+  <script src="audio.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
